@@ -8,7 +8,7 @@ set -euo pipefail
 
 REPO="works-real-estate/wre-dashboards"
 TARGET_DIR="$HOME/dev/wre-dashboards"
-MIN_NODE_MAJOR=20
+MIN_NODE_MAJOR=22
 
 cyan()  { printf "\033[36m%s\033[0m\n" "$1"; }
 red()   { printf "\033[31m%s\033[0m\n" "$1"; }
@@ -46,15 +46,15 @@ fi
 
 if ! $node_ok; then
   cyan "Installing Node $MIN_NODE_MAJOR LTS (may prompt for your Mac password)..."
-  NODE_VERSION=$(curl -fsSL "https://nodejs.org/dist/latest-v20.x/" \
-    | grep -oE "node-v20\.[0-9]+\.[0-9]+\.pkg" | head -1 | sed 's/node-//;s/\.pkg//')
+  NODE_VERSION=$(curl -fsSL "https://nodejs.org/dist/latest-v22.x/" \
+    | grep -oE "node-v22\.[0-9]+\.[0-9]+\.pkg" | head -1 | sed 's/node-//;s/\.pkg//')
   if [ -z "$NODE_VERSION" ]; then
     red "Failed to detect latest Node 20.x version from nodejs.org."
     red "Install Node 20 LTS manually from https://nodejs.org/ and re-run."
     exit 1
   fi
   NODE_PKG="/tmp/node-${NODE_VERSION}.pkg"
-  curl -fsSL -o "$NODE_PKG" "https://nodejs.org/dist/latest-v20.x/node-${NODE_VERSION}.pkg"
+  curl -fsSL -o "$NODE_PKG" "https://nodejs.org/dist/latest-v22.x/node-${NODE_VERSION}.pkg"
   sudo installer -pkg "$NODE_PKG" -target /
   rm -f "$NODE_PKG"
   green "✓ Node ${NODE_VERSION} installed"
